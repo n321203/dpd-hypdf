@@ -2,17 +2,17 @@ var Resource = require('deployd/lib/resource');
 var util = require('util');
 var internalClient = require('deployd/lib/internal-client');
 var spawn = require('child_process').spawn;
-var HyPDF = require('hypdf');
+var HypdfLib = require('hypdf');
 
-function dpdHyPDF(name, options) {
+function HyPDF(name, options) {
     Resource.apply(this, arguments);
 }
 
-util.inherits(dpdHyPDF, Resource);
-module.exports = dpdHyPDF;
+util.inherits(HyPDF, Resource);
+module.exports = HyPDF;
 
-dpdHyPDF.prototype.clientGeneration = true;
-dpdHyPDF.prototype.handle = function(ctx, next){
+HyPDF.prototype.clientGeneration = true;
+HyPDF.prototype.handle = function(ctx, next){
 
 	var dpd = internalClient.build(process.server);
 
@@ -26,7 +26,12 @@ dpdHyPDF.prototype.handle = function(ctx, next){
 	//     return next();
 	// }
 
-	var hypdf = new HyPDF(process.env.HYPDF_USER, process.env.HYPDF_PASSWORD, {
+
+	var user = "app18800740@heroku.com";
+	var pass = "T5cBfEH55GOL";
+
+	//var hypdf = new HypdfLib(process.env.HYPDF_USER, process.env.HYPDF_PASSWORD, {
+	var hypdf = new HypdfLib(user, pass, {
 
 	    // default options to use - these can be changed for each individual API request 
 	    bucket: "bolanegruppenpdf",

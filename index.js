@@ -1,18 +1,18 @@
-var Resource = require('deployd/lib/resource')
+var Resource = require('deployd/lib/resource');
 var util = require('util');
-var internalClient = require('deployd/lib/internal-client')
+var internalClient = require('deployd/lib/internal-client');
 var spawn = require('child_process').spawn;
 var HyPDF = require('hypdf');
 
-function HyPDF(name, options) {
+function dpdHyPDF(name, options) {
     Resource.apply(this, arguments);
 }
 
-util.inherits(HyPDF, Resource);
-module.exports = HyPDF;
+util.inherits(dpdHyPDF, Resource);
+module.exports = dpdHyPDF;
 
-HyPDF.prototype.clientGeneration = true;
-HyPDF.prototype.handle = function(ctx, next){
+dpdHyPDF.prototype.clientGeneration = true;
+dpdHyPDF.prototype.handle = function(ctx, next){
 
 	var dpd = internalClient.build(process.server);
 
@@ -21,22 +21,21 @@ HyPDF.prototype.handle = function(ctx, next){
 	// 	return next();
 
 	// Validate
-	var body = ctx.req.body || {}
-	if (!body || !body.k || body.k != DPD_HyPDF_KEY) {
-	    return next();
-	}
+	// var body = ctx.req.body || {}
+	// if (!body || !body.k || body.k != DPD_HyPDF_KEY) {
+	//     return next();
+	// }
 
 	var hypdf = new HyPDF(process.env.HYPDF_USER, process.env.HYPDF_PASSWORD, {
 
 	    // default options to use - these can be changed for each individual API request 
-	    bucket: "MY_S3_BUCKET",
+	    bucket: "bolanegruppenpdf",
 	    public: true, // all S3 uploads will be public by default 
 	    test: true // we are in test mode - these requests won't count against our HyPDF quota 
 	});
 
 	hypdf.htmltopdf("<html><body><h1>Title</h1></body></html>", {
-	        orientation: 'Landscape',
-	        copies: 2,
+	        orientation: 'Landscape'
 	        // ... other options ... 
 	    },
 	    function(err, response) {

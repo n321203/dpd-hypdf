@@ -31,7 +31,7 @@ HyPDF.prototype.handle = function(ctx, next){
 	var random = Math.random().toString();
 	var randomfilename = crypto.createHash('sha1').update(current_date + random).digest('hex');
 
-	var hypdf = new HypdfLib(user, pass, {
+	var hypdf = new HypdfLib(process.env.HYPDF_USER, process.env.HYPDF_PASSWORD, {
 	    // default options to use - these can be changed for each individual API request 
 	    bucket: "bolanegruppenpdf",
 	    public: true, // all S3 uploads will be public by default 

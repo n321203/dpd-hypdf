@@ -3,6 +3,7 @@ var util = require('util');
 var internalClient = require('deployd/lib/internal-client');
 var spawn = require('child_process').spawn;
 var HypdfLib = require('hypdf');
+var crypto = require("crypto");
 
 function HyPDF(name, options) {
     Resource.apply(this, arguments);
